@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pink</title>
+    <style>
+        body {
+            background-color: pink;
+            background-image: radial-gradient(circle, white 10px, pink 10px);
+            background-size: 40px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #urlInput {
+            padding: 10px;
+            width: 300px;
+            border: 2px solid black;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        #searchButton {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+        iframe {
+            width: 80%;
+            height: 60%;
+            border: 2px solid black;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+    <script src="/uv/uv.bundle.js"></script>
+    <script src="/uv/uv.config.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("/uv/sw.js", {
+                    scope: __uv$config.prefix,
+                });
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("urlInput").addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    document.getElementById("searchButton").click();
+                }
+            });
+
+            document.getElementById("searchButton").onclick = function (event) {
+                event.preventDefault();
+                let url = document.getElementById("urlInput").value;
+                let searchUrl = "https://www.google.com/search?q=";
+                if (!url.includes(".")) {
+                    url = searchUrl + encodeURIComponent(url);
+                } else {
+                    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                        url = "https://" + url;
+                    }
+                }
+                document.getElementById("iframeWindow").src = __uv$config.prefix + __uv$config.encodeUrl(url);
+            };
+        });
+    </script>
+</head>
+<body>
+    <input type="text" id="urlInput"  placeholder="Enter URL here" style="border:none">
+    <button id="searchButton" style="border:none">Search</button>
+    <iframe id="iframeWindow" style="border:none" class="iframeWindow"></iframe>
+</body>
+</html>
