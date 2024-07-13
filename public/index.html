@@ -16,6 +16,7 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
+            position: relative;
         }
         #urlInput {
             padding: 10px;
@@ -38,6 +39,14 @@
             border: 2px solid black;
             border-radius: 5px;
             margin-top: 20px;
+        }
+        #settingsIcon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
         }
     </style>
     <script src="/uv/uv.bundle.js"></script>
@@ -80,6 +89,7 @@
     </script>
 </head>
 <body>
+    <img id="settingsIcon" src="https://static-00.iconduck.com/assets.00/gear-settings-icon-512x510-emfroqvl.png" alt="Settings">
     <input type="text" id="urlInput" placeholder="Enter URL here">
     <button id="searchButton">Search</button>
     <iframe id="iframeWindow" class="iframeWindow"></iframe>
